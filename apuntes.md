@@ -191,7 +191,40 @@ Son una serie de caracteres especiales que nos permiten realizar búsquedas muy 
 ## Empezando a correr
 
 ### Redirecciones: cómo funciona la shell
+
+Las redirecciones nos permiten trasladar información, haciendo uso del símbolo `>`. ¿Como funciona?
+
+> `stdin (0)`: Entrada estándar.
+> `stdout (1)`: Salida estándar.
+> `stderr (2)`: Salida de errores.
+
+![how-to-shell work](https://imgur.com/YtTYIPe.png)
+
+Normalmente, cuando pones un comando en la terminal, la salida se muestra ahí mismo, pero se puede redirigir la salida a un archivo 👀. Si la salida es correcta tiene `file descriptor 1`, si no, `file descriptor 2`.
+
+La entrada estándar es nuestro teclado que tiene `file descriptor 0`, pero también puede venir de otro lado 🧠.
+
+- Para redirigir algo usamos `>`. Por ejemplo `ls > misarchivos.txt`, entonces la salida del comando se guarda en ese archivo de texto. Siempre crea este archivo (si ya existe, lo reescribe).✍🏽
+- Para que se concatene la salida en un archivo preexistente usa `"comando" >> "archivo"`. Esto ambos solo redirigen los `stdout`.
+- Para redirigir `stderr`, agregas su file descriptor `"comando" 2> "archivo"`. 👽
+- Si quiere redirigir cualquiera de las dos opciones `"comando" >> "archivo" 2>&1`. Esto nos puede servir para, por ejemplo, guardar los mensajes de error que manda un servidor 🤯.
+- Para redirigir `stdin` se usa `<`. Esto te permite tener de entrada de comandos algún archivo.
+
 ### Redirecciones: pipe operator
+
+🐱‍💻 El `pipe operator` `|` permite enviar la salida de un comando `stdout(1)` como entrada del siguiente `stdin(0)`.
+
+- `echo <texto>` genera un `stdout` con el texto que tenemos.
+- `cat <archivo1> <archivo2>` muestra los dos archivos concatenados 💩.
+- El pipe operator `|` hace que el `stdout` de un comando sea el `stdin` de otro comando. Por ejemplo `ls -lh | less`
+- `tee` hace algo parecido a `>`, pero dentro de los pipe´s, por ejemplo `ls -lh | tee output.txt |less`. Se puede poner en medio, pero se ignora porque se sigue pasando.
+- `cowsay "Texto"` es un comando que imprime una vaca que dice algo🐮.
+  - `sudo apt install cowsay` para instalar el comando.
+- `lolcat "texto"` imprime a color la salida o le da color al comando que imprimimos.
+  - `sudo apt install lolcat` para instalar lolcat
+
+> Es resumen: Es uno de los operadores mas útiles que existen, ya que nos permite poner varios comandos, tales que la salida de uno es la entrada del siguiente 📤.
+
 ### Encadenando comandos: operadores de control
 ### Cómo se manejan los permisos
 ### Modificando permisos en la terminal
