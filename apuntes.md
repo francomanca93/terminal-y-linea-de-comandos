@@ -226,9 +226,74 @@ La entrada estándar es nuestro teclado que tiene `file descriptor 0`, pero tamb
 > Es resumen: Es uno de los operadores mas útiles que existen, ya que nos permite poner varios comandos, tales que la salida de uno es la entrada del siguiente 📤.
 
 ### Encadenando comandos: operadores de control
+
+Los **operadores de control** permiten ejecutar más de un comando, encadenando los mismos.
+
+- Son símbolos reservados por la terminal que nos permiten ejecutar varios comandos seguidos, e incluso agregar condicionales ⛓️.
+- **Síncronos**: Se corre uno detrás de otro, en orden. Se hace esto con `;` , por ejemplo `ls; mkdir carpeta1; cal` 👁️
+- **Asíncrono**: Por cada comando, se abre una nueva terminal, y cada comando se corre de manera paralela, esto es con `&`, por ejemplo `ls & date & cal` ⏲️
+- **Condicionales**: Podemos agregar lógica a como se corren los comandos:
+  - **AND**: Si se cumple un comando, entonces se ejecuta el siguiente, se usa `&&`, un ejemplo es `mkdir carpeta1 && cd carpeta1 && echo "Si se pudo"` . Si no se puede ejecutar el primer comando, no se ejecuta el siguiente. 🚆
+  - **OR**: Se ejecuta el primer comando que se pueda ejecutar, y se usa `||`, por ejemplo `cd carpeta || echo "No hay carpeta"`.
+
 ### Cómo se manejan los permisos
+
+- Cuando listamos con `ls -l` se muestran varias cosas. Los **tipos de archivos**:
+  - `-`: archivo normal.
+  - `d`: directorio.
+  - `l`: link simbólico.
+  - `b`: archivo de bloque especial.
+
+- **Tipos de modos**: `rwx` corresponde con `read, write y execute`. 
+
+![rwx-permissions](https://i.imgur.com/kMInAnW.png)
+
+- Se representan con 3 bits, y los podemos manejar a través de un modo **octal**, esto es, pasar de binario a número.
+  - `rwx (1,1,1)` dueño. En modo octal es 7.
+  - `r-x (1,0,1)` grupo. En modo octal es 5.
+  - `r-x (1,0,1)` world. Octal 5.
+
+[Linux permission generator](https://josenoriegaa.github.io/linux-file-system-permission-generator/index.html)
+
+![modo-octal-binario-permisos](https://i.imgur.com/fKTSij7.png)
+
+- **Modo simbólico**: Esto es para asignar los permisos a los diferentes posibles usuarios.
+  - `u`: Solo para el usuario.
+  - `g`: Solo para el grupo.
+  - `o`: Solo para otros (world).
+  - `a`: Aplica para todos.
+
 ### Modificando permisos en la terminal
+
+Existen diversos usuarios con permisos cada uno; el usuario root es especial y puede hacer de todo🚶🏽.
+
+- Puedes crear archivos de texto también con `> archivo.txt` y también podemos editarlo con `cat > archivo.txt` 📜
+- En un archivo, se muestran: `[tipo de archivo][rwx usuario][rwx grupo][rwx mundo]`, por ejemplo, `-rw-r--r-- mitexto.txt` 👀.
+- `chmod <permiso en octal para usuario><para grupo><para mundo> <archivo>`: **change mode** nos sirve para cambiar los permisos de un archivo. Si hacemos por ejemplo `chmod 755 mitexto.txt` tendremos ahora `-rwxr-xr-x mitexto.txt`, esto no cambia para nada el contenido del archivo.
+- Para quitarle los permisos a alguien en particular, usamos el modo simbólico y usando la resta, por ejemplo quitando el permiso de lectura al usuario `chmod u-r mitexto.txt`. Para agregar, se usa la suma. 🧮
+- Podemos hacer configuraciones mas avanzadas, por ejemplo, podemos asignar varios permisos al mismo tiempo `chmod u-x,go=w mitexto.txt`.
+- `whoami` Para saber que usuario somos, y también podemos obtener el ID del usuario con id.
+- `su root` para cambiar de usuario hacía **root**, hay que tener cuidado al usar este usuario 😟. Su home es incluso distinto. Los archivos que crea **root** (o otro usuario) no se pueden eliminar por un usuario normal. 
+  - `sudo <comando>` nos otorga temporalmente los permisos de root para ejecutar algún comando que ocupe permisos especiales. 🦸🏽 Nunca dejes el usuario root por defecto, y ponle una contraseña distinta.
+
 ### Cómo configurar variables de entorno
+
+- La terminal tiene una configuración con diferentes valores, que se pueden acceder con las variables de entorno. Estas son muy importantes para la configuración general del sistema 🚒.
+- Podemos guardar alias para que se queden de manera permanente con esto 😉.
+- `ln -s <ruta> <Nombre>` Esto para hacer link simbólicos, que son un tipo de archivo que hacen referencia a otro lugar, básicamente es un acceso directo desde terminal 📁.
+- `printenv` nos muestra todas las variables de entorno que tenemos configuradas 📔.
+- `echo $<variables>` esto nos sirve para imprimir una variable en particular.
+- Algunas variables son:
+  - `HOME` es nuestro HOME de usuario 😆.
+  - `PATH` tiene todas las rutas donde se encuentran los binarios en los que se ejecuta nuestro sistema. 🛣️ Hay varios manejadores de paquetes para binarios, pero no todas las veces se agregan a PATH, y se deben agregar a mano.
+- En `HOME`, existe un archivo que se llama `.bashrc` que es donde está nuestra configuración de **Bash**. Lo podemos abrir con VS Code para modificarlo. En este archivo podemos crear alias.
+- `alias <nombre>="comando"` para crear un alias útil 👀.
+- `code <archivo>` para abrir un archivo de texto en VS Code desde la terminal.
+- Para modificar o crear una variable de entorno, se hace, por ejemplo `PLATZI_MESSAGE='Hola amigos"`.
+- Para agregar una ruta a la variable PATH ponemos en **.bashrc** `PATH=$PATH:<ruta>`, guardamos, cargamos bash en la terminal, y listo 😄.
+
+> Es muuuy importante tener cuidado con los alias, nunca hay que nombrar un alias como un comando ya existente 😟.
+
 ### Comandos de búsqueda
 ### Su majestad: grep
 
