@@ -379,7 +379,27 @@ grep "Imagina .* algo" test.txt
 ## Utilidades de la terminal
  
 ### Utilidades de red
+
+Existen comandos que nos dan información sobre la red 🥅:
+
+- `ifconfig`: Nos da información general sobre nuestra red 🔍.
+- `ping <url>`: Nos dice si una página está activa a no 🏃🏽. Lo revisa continuamente, y podemos usarla para ver la velocidad de nuestra conexión.
+- `curl <url>`: Nos trae un archivo de texto a través de la red 🌎. (El index.html).
+- `wget <url>`: Web get, trae un archivo de la web, descarga el archivo directamente a nuestra computadora 💻. (El index.html con mejor formato).
+- `traceroute <url>`: Nos da la lista de todas las computadoras (direcciones IP) por la que nuestra conexión pasa para llegar a un sitio web 🚰.
+- `netstat -i`: Nos muestra los dispositivos de red. Similar a ifconfig pero más resumido 👀.
+
 ### Comprimiendo archivos
+
+Comprimiendo archivos.
+
+Podemos crear archivos comprimidos `.zip` o `.tar` desde la terminal. 🤖
+
+- `.tar`: se usa mucho en repositorios. Para comprimir `tar -cvf <nombre>.tar <archivos>`, donde `c → compress`, `v → verbose`, `f→ file`. 📁
+- `.gz`: es un poco mejor, se usa el mismo comando pero con la bandera `z→zip` `tar -cvzf <nombre>.gz <archivos>`. Usa el algoritmo gzip que es muy eficiente para comprimir. 📄 Para descomprimirlo, usamos el mismo comando pero con la bandera `x → decompress` en lugar de `c → compress`. Para que funcione, debemos descomprimir debemos usar el mismo tipo de compresión (tar o zip). 📖
+- `.zip`:  es uno muy común. Es necesario instalarlo en linux. `zip -r <nombre>.zip <directorio>`. Para descomprimir usamos `unzip <nombre>.zip`. 📃
+- `.rar`:  funciona igual que `.zip`, pero con `rar` y `unrar` de comandos 👁️‍🗨️.
+
 ### Manejo de procesos
 ### Procesos en foreground y background
 ### Editores de texto en la terminal
