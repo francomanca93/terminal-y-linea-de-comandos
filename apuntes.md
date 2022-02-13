@@ -25,6 +25,7 @@
     - [Cómo configurar variables de entorno](#cómo-configurar-variables-de-entorno)
     - [Comandos de búsqueda](#comandos-de-búsqueda)
     - [Su majestad: grep](#su-majestad-grep)
+      - [Ejemplos de grep](#ejemplos-de-grep)
   - [Utilidades de la terminal](#utilidades-de-la-terminal)
     - [Utilidades de red](#utilidades-de-red)
     - [Comprimiendo archivos](#comprimiendo-archivos)
@@ -295,7 +296,85 @@ Existen diversos usuarios con permisos cada uno; el usuario root es especial y p
 > Es muuuy importante tener cuidado con los alias, nunca hay que nombrar un alias como un comando ya existente 😟.
 
 ### Comandos de búsqueda
+
+Es una de las partes mas interesantes de la terminal, ya que nos permite buscar archivos de manera eficiente y específica 💫.
+
+- `which <programa>`: Busca en todas las rutas del PATH para encontrar donde está alojado algún archivo binario 🔢.
+- `find <ruta inicial> -name <archivo>`: Nos permite encontrar un archivo a partir de una ruta inicial, y dentro de todas las carpetas que surjan de ese inicio 🌲.
+
+Algo interesante es que podemos usar wildcards para hacer mas eficiente la búsqueda 🔍.
+- `find <ruta inicial> -type <tipo> -name <nombre>`: podemos especificar el tipo de archivo, **d → directorio**, **f → documento**.
+- `find <ruta inicial> -size <tamaño><unidad>` podemos buscar tamaños mayores a un determinado tamaño, por ejemplo, de **20M (megas)**.
+
 ### Su majestad: grep
+
+
+Es uno de los comandos mas útiles, y de los mas potentes dentro de Linux.🤖
+
+El comando grep nos permite encontrar texto que contenga un patrón dentro de uno o varios archivos de manera rápida.
+
+- `grep <Expresión regular> <archivo>`: El primer parámetro es una expresión regular, y es diferente a las wildcarts; es muy versátil para realizar búsquedas.
+
+Tenemos varías opciones:
+
+- `-i`: para ignorar case-sensitive.
+- `-c`: cuenta el número de elementos.
+- `-v`: para hacer búsqueda complementaria, esto es, todos los elementos que no coincidan.
+
+- `wc <archivo>`: cuenta el número de palabras. Opciones:
+  - `-l`: cuenta el número de lineas.
+  - `-w`: cuenta el número de palabras.
+  - `-c`: número de bits.
+
+> Las expresiones regulares pueden ser útiles en otros contextos, por ejemplo, en otros lenguajes de programación 🐍 que las soporten.
+
+#### Ejemplos de grep
+
+- Buscar algún paquete en específico que tengas instalado:
+
+```shell
+dpkg --get-selections | grep nombreDelPaquete
+# dpkg --get-selections te dirá todos tus paquetes instalados
+# grep filtrará esa lista con el paquete que te interesa
+```
+
+- Filtrar algún archivo en específico después de un ls:
+
+```shell
+ls -al | grep myFile.txt
+
+# ls te dará la lista de todos tus archivos
+# grep filtrará todos y te mostrará únicamente el que deseas
+```
+
+- Buscar algún contenido en específico dentro de algún archivo:
+
+```shell
+cat unArchivoLargo.txt | grep "La línea que busco"
+
+# cat Te listará todo el contenido de ese archivo
+# grep te filtrará únicamente lo que quieres ver
+```
+
+- Buscar una línea en específico en diferentes archivos por medio de un patrón:
+
+```shell
+grep "string" archivo_*
+
+# grep buscará la palabra "string" en todos los archivos que comienzen por "archivo_" y te los mostrará.
+```
+
+- Buscar usando expresiones regulares:
+
+Imagina que tienes un archivo llamado test.txt y adentro contiene la siguiente frase. Imagina que quieres buscar algo, entonces, podemos usar grep así:
+
+```shell
+grep "Imagina .* algo" test.txt
+
+# grep buscará alguna coincidencia, la expresion .* indica que ahí dentro puede haber una o más letras, cualquier que sea, así que podrías leerla como: Imagina (cualquier cosa) algo.
+```
+
+[15 Practical Grep Command Examples In Linux / UNIX](https://www.thegeekstuff.com/2009/03/15-practical-unix-grep-command-examples/)
 
 ## Utilidades de la terminal
  
