@@ -401,6 +401,48 @@ Podemos crear archivos comprimidos `.zip` o `.tar` desde la terminal. 🤖
 - `.rar`:  funciona igual que `.zip`, pero con `rar` y `unrar` de comandos 👁️‍🗨️.
 
 ### Manejo de procesos
+
+Cuando se traba nuestro OS, normalmente terminamos procesos con el administrador de tareas 😆, en la terminal se puede hacer, pero es un poco diferente.
+- `ps` nos muestra los procesos que están corriendo actualmente. Cada proceso tiene un **PID**. Podemos ver los procesos que estén en el background (por ejemplo, CAT).
+- `kill <PID>` nos ayuda a terminar procesos fuera de nuestra terminal. 🛑
+- `top <PID>` nos muestra los procesos que están usando más recursos de nuestra computadora. Podemos filtrar los procesos (para ver como, usamos bandera `h` → help). 🆘
+
+> La terminal, sabiéndola usar bien, es más eficiente que el administrador de tareas.
+
+- `htop` es como `top` pero con esteroides. Debemos instalarlo. Tiene muchas más opciones 💪🏽
+
+Nivel de poder de algunos de programas para gestionar procesos:
+
+- 4to: `ps` (Dios griego: Hephaestus)
+- 3ro: `top` (Dios griego: Apollo)
+- 2do: `htop` (Dios griego: Poseidon)
+- 1ro: `glanses` (Dios griego: Zeus) lo malo de este es que consume bastante CPU, pero se ve genial y te dice que problemas ocurren.
+
 ### Procesos en foreground y background
+
+Los procesos que están corriendo pero no se muestran en terminal se dice que están en **background**. Los que si se muestran están en **foregroung**. 🏘️
+
+- Para mover un proceso al background, usamos `Ctrl+z`. Esto lo suspende, pero sigue corriendo (como con Cat). Para matar un proceso se usa `Ctrl+c`
+- `fg <numero de trabajo>` nos permite traer un proceso al `foreground`. Es importante notar que el número de trabajo no es lo mismo que el PID.
+- `bg <numero de trabajo>` nos permite llevar un proceso al background, pero sin suspender el proceso.⭐
+
+Ejemplo muy sencillo que servirà para controlar procesos es el siguiente:
+
+Crear un listado recursivo (Que liste todos los archivos y directorios)
+
+Para eso seguimos los sigueintes pasos:
+1. Primero hacemos el comando `cd /` para dirigirnos a la raíz de nuestro sistema.
+2. Después ejecutamos el comando `ls -R` y comenzará a listar TODO lo que existe dentro de nuestro S.O.
+3. Ahora lo que hacermos será confirmar lo aprendido, utilizamos `Ctrl + C` y veremos que se cancela el proceso, pero lo interesante viene cuando hacemos lo siguiente 😄
+4. Ahora ejecutamos el mismo comando para listar TODO, `ls -R` y lo detenemos con `Ctrl + Z` a lo que nos saldrá lo siguiente: `[Número del proceso] + Id del proceso +` En donde se detuvo el proceso. Y se verá algo como esto: `[1] + 40751 suspended (signal) ls --color=tty -R`
+5. Y repetiremos el paso 4 otras 3 veces.
+6. Si ejecutamos el comando `jobs` nos mostrará todos los procesos suspendidos y si tenemos ejecutando alguno en segundo plano.
+7. Para volver a activar algún proceso podemos hacerlo con el comando `fg %Número del proceso`
+
+Por ejemplo en bash con `fg %1` y en zsh con `fg %1` para volver a correr el primer proceso que suspendimos, y ahora le damos `Crl + C` para ahora sí matarlo, ahora el proceso 1 ya no existirá al ejecutar jobs pero el 2, 3 y 4 ahí seguirán 😄
+
+Esto es muy importante para cuando queremos manejar diferentes procesos, por ejemplo con el comando `sleep 10000 &` pondrá un proceso en segundo plano, entonces no lo podremos ver, pero nos marca el Número del proceso entre los `[]` también lo podemos ver con `jobs` junto con su número de proceso, si lo queremos traer a primer plano lo podemos hacer con el comando `fg %1` por ejemplo y de ahí ya cancelarlo o suspenderlo, o una manera más rápida, solo ejecutar el comando `kill %Número del proceso` por ejemplo: con el mismo ejemplo de `sleep 10000 &` si nos da el `[1]` lo podremos terminar con `kill 1` o `kill %1` y nos saldrá algo como `[1] + 41723 terminated sleep 10000` y ahora ya saber como manejar y exterminar todos los procesos como terminator 🤖.
+
+
 ### Editores de texto en la terminal
 ### Personalizar la terminal de comandos
